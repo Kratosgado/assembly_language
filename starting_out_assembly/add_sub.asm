@@ -57,7 +57,7 @@ _start:
     ; and subtracting ascii '0' to convert it into a decimal number
     mov eax, [num1]
     sub eax, '0'
-    add ebx, [num2]
+    mov ebx, [num2]
     sub ebx, '0'
 
     ; add eax and ebx
