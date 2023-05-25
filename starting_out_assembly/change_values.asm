@@ -8,7 +8,9 @@ _start:     ; tell linker entry point
     mov eax, 4      ; sys_write
     int 0x80        ; call kernel
 
-    ; writing the name 'Nuha Ali'
+    mov [name], dword 'Nuha' ; changed the name to Nuha
+
+    ; writing the new name 'Nuha Ali'
     mov edx, 8   ; name length
     mov ecx, name   ; name to write
     mov ebx, 1      ; stdout
@@ -17,8 +19,8 @@ _start:     ; tell linker entry point
 
     ; exit program
     mov eax, 1     ; sys_exit
-    xor ebx, ebx   ; exit status (0)
+    ;xor ebx, ebx   ; exit status (0)
     int 0x80       ; call kernel
 
 section .data
-name db 'Zara Ali',0  ; initialize the name with null terminator
+name db 'Zara Ali', 0xa  ; initialize the name with null terminator
