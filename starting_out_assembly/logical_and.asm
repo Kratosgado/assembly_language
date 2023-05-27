@@ -1,3 +1,6 @@
+; program to check whether a number is odd or even
+; using the bitwise op and
+
 section .text
     global _start        ; for linker
 _start:         ; entry point

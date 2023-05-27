@@ -1,3 +1,5 @@
+; program that adds two numbers
+
 section .text
     global _start     ; must be declared for linker ld
 _start:

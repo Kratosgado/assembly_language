@@ -1,3 +1,7 @@
+; this program assigns a name to variable
+; displays it and changes the first name to another 
+; and display that one also
+
 section .text
     global _start   ; must be declared for linker (ld)
 _start:     ; tell linker entry point

@@ -1,3 +1,6 @@
+; this was geared towards making use of the equ 
+; function to define constants
+
 section .data
 choice db 'y', 0xa
 write equ 4

@@ -1,3 +1,4 @@
+; program that multiplies two numbers
 section .data
     prompt db 'The sum is: '
     len equ $-prompt
@@ -9,11 +10,11 @@ section .text
     global _start
 _start:
     mov al, '4'
-    sub al, '0' ; convert to ASCII
+    sub al, '0' ; convert to decimal
     mov bl, '2'
-    sub bl, '0' ; convrt to ASCII
+    sub bl, '0' ; convrt to decimal
     mul bl
-    add al, '0' ; convert back from ASCII
+    add al, '0' ; convert back to ASCII
 
     mov [res], al
 
