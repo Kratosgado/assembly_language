@@ -13,7 +13,7 @@ loop1:          ; loop to be executed
     ; write current number
     mov eax, 4         
     mov ebx, 1
-    push ecx
+    push ecx ; push the loop counter to provide room for number to print
     mov ecx, num
     mov edx, 1
     int 0x80
@@ -22,7 +22,7 @@ loop1:          ; loop to be executed
     sub eax, '0'    ; convert to decimal
     inc eax         ; increment number by 1
     add eax, '0'    ; convert to ASCII
-    pop ecx         ; decrease loop counter
+    pop ecx         ; retrieve pushed loop counter to continue
     loop loop1      ; run loop again while ecx > 0
 
 ; move to newline after loop
