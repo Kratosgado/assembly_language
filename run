@@ -1,0 +1,41 @@
+#!/bin/bash
+# this is a bash script to automate the compilation and running
+# of the assembly codes
+# it also deletes the files created in the process
+# leaving your directory clean
+# 
+# change the name of the file to suit your style
+# then add it to your /usr/local/bin/ path
+# you can run the script with
+# script_name code_name.asm
+
+
+# check if nasm file is provided as an argument
+if [ $# -ne 1 ]; then
+	echo "Usage: $0 <nasm_file>"
+	exit 1
+fi
+
+# get the nasm file name from the input argument
+nasm_file="$1"
+
+# verify if the nasm file exists
+if [ ! -f "$nasm_file" ]; then
+	echo "Error: $nasm_file does not exist"
+	exit 1
+fi
+
+# extract the base name of the nasm file without the extension
+file_basename="${nasm_file%.*}"
+
+# assemble the nasm code
+nasm -f elf64 "$nasm_file" -o "$file_basename.o"
+
+# link the object file
+ld "$file_basename.o" -o "$file_basename"
+
+# execute the resulting executable
+./"$file_basename"
+
+# delete the files created in the process
+rm "$file_basename.o" "$file_basename"

@@ -1,18 +1,18 @@
 section .data
     hello db 'Hello, World!', 0x0a
+    len equ $ - hello       ; lenth of string
 
 section .text
     global _start
 
 _start:
     ; Write the string to stdout
-    mov eax, 4              ; Syscall number for write
-    mov ebx, 2              ; File descriptor (stdout)
-    mov ecx, hello          ; Address of the string
-    mov edx, 14             ; Length of the string
-    int 0x80                ; Call the kernel
+    mov rax, 1              ; Syscall number for write
+    mov edi, 1              ; File descriptor (stdout)
+    mov esi, hello          ; Address of the string
+    mov rdx, len             ; Length of the string
+    syscall                ; Call the kernel
 
     ; Exit the program
-    mov eax, 1              ; Syscall number for exit
-    xor ebx, ebx            ; Exit status (0)
-    int 0x80                ; Call the kernel
+    mov rax, 60              ; Syscall number for exit
+    syscall                ; Call the kernel
