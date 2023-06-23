@@ -12,16 +12,17 @@ section .data
 
     ; level 1 correct words
     moon  db 'moon'
-    man db 'man'
-    ooze db 'ooze'
-    spa db 'spa'
-    seal db 'seal'
-    ; length of level 1 words
     lenMoon equ $ - moon
+
+    man db 'man'
     lenMan equ $ - man 
+    ooze db 'ooze'
     lenOoze equ $ - ooze
-    lenSpa equ $ - spa 
+    seal db 'seal'
     lenSeal equ $ - seal
+    spa db 'spa'
+    lenSpa equ $ - spa 
+
 
     ; level 2 grid
     L2LINE1 DB '  A  M  A  Z  E  M  ', 10
@@ -35,26 +36,24 @@ section .data
 
     ; level 2 correct words
     amaze db 'amaze'
-    pace db 'pace'
-    pin db 'pin'
-    cap db 'cap'
-    zip db 'zip'
-    phi db 'phi'
-    heat db 'heat'
-    ape db 'ape'
-    eat db 'eat'
-    cool db 'cool'
-
-    ; length of level 2 words
     lenAmaze equ $ - amaze
+    pace db 'pace'
     lenPace equ $ - pace
+    pin db 'pin'
     lenPin equ $ -pin
+    cap db 'cap'
     lenCap equ $ -cap
+    zip db 'zip'
     lenZip equ $ -zip
+    phi db 'phi'
     lenPhi equ $ -phi
+    heat db 'heat'
     lenHeat equ $ -heat
+    ape db 'ape'
     lenApe equ $ -ape
+    eat db 'eat'
     lenEat equ $ -eat
+    cool db 'cool'
     lenCool equ $ - cool
 
     ; LEVEL 3 GRID
@@ -71,27 +70,26 @@ section .data
 
     ; level 3 correct words
     cane db 'cane'
-    main db 'main'
-    nose db 'nose'
-    thrown db 'thrown'
-    read db 'read'
-    customer db 'customer'
-    donors db 'donors'
-    button db 'button'
-    sender db 'sender'
-    radicule db 'radicule'
-
-    ; length of level 3 words
     lenCane equ $ - cane
+    main db 'main'
     lenMain equ $ - main
+    nose db 'nose'
     lenNose equ $ - nose
+    thrown db 'thrown'   
     lenThrown equ $ - thrown
+    read db 'read'    
     lenRead equ $ - read
+    customer db 'customer'    
     lenCustomer equ $ - customer
+    donors db 'donors'    
     lenDonors equ $ - donors
+    button db 'button'    
     lenButton equ $ - button
+    sender db 'sender'    
     lenSender equ $ - sender
+    radicule db 'radicule'    
     lenRadicule equ $ - radicule
+
 
     ; level 4 grid
     firstLine db '  U  N  I  V  E  R  S  I  T  Y  ', 10
@@ -106,27 +104,25 @@ section .data
     len4 equ $ - firstLine
 
     ; correct words in crossword
-    university db 'university'
-    accord db 'accord'
-    table db 'table'
-    elephant db 'elephant'
-    din db 'din'
-    pane db 'pane'
-    son db 'son'
-    ions db 'ions'
-    right db 'right'
-    tout db 'tout'
-
-    ; length of level 4
+    university db 'university'    
     lenUniversity equ $ - university
+    accord db 'accord'    
     lenAccord equ $ - accord
+    table db 'table'    
     lenTable equ $ - table
+    elephant db 'elephant'    
     lenElephant equ $ - elephant
+    din db 'din'    
     lenDin equ $ - din
+    pane db 'pane'    
     lenPane equ $ - pane
+    son db 'son'    
     lenSon equ $ - son
+    ions db 'ions'    
     lenIons equ $ - ions
+    right db 'right'    
     lenRight equ $ - right
+    tout db 'tout'    
     lenTout equ $ - tout
 
     ; displaying messages
@@ -157,6 +153,11 @@ section .data
     lenNo equ $ - no
 
 
+
+
+
+
+
 ; declare guess for recieving the input for the user
 section .bss
     guess resb 32
@@ -184,16 +185,7 @@ _start:
 
     jmp greeting
 
-; print cross word grid
-begin1:
-    call level1
-begin2:
-    call level2
-begin3:
-    call level3
-begin4:
-    call level4
-    
+
 greeting:
     ; display crossword
     mov rax, 1
@@ -220,6 +212,27 @@ greeting:
 
     jmp exit
 
+; print cross word grid
+begin1:
+    call level1
+begin2:
+    call level2
+begin3:
+    call level3
+begin4:
+    call level4
+
+; Print level 1 words and start displaying
+level1:
+    ; Print string to console
+    mov rax, 1
+    mov edi, 1
+    mov esi, l1FirstLine
+    mov rdx, len1
+    syscall
+
+    jmp display_prompt1
+
 ; display a prompt to recieve input
 display_prompt1:
     mov rax, 1
@@ -240,7 +253,65 @@ get_guess1:
 
     jmp check_guess_l1
 
-; level 2
+; check the word user input and run through the correct words
+check_guess_l1:
+    ; Compare strings s1 and s2
+    mov rsi, moon
+    mov rdi, guess
+    mov rcx, lenMoon
+    cld
+    repe cmpsb
+    ; If rcx is zero (end of both strings reached), jump to equal
+    je match_found
+
+; will be back
+    mov rsi, man
+    mov rdi, guess
+    mov rcx, lenMan
+    cld
+    repe cmpsb
+    ; If rcx is zero (end of both strings reached), jump to equal
+    je match_found
+
+    mov rsi, seal
+    mov rdi, guess
+    mov rcx, lenSeal
+    cld
+    repe cmpsb
+    ; If rcx is zero (end of both strings reached), jump to equal
+    je match_found
+
+    mov rsi, ooze
+    mov rdi, guess
+    mov rcx, lenOoze
+    cld
+    repe cmpsb
+    ; If rcx is zero (end of both strings reached), jump to equal
+    je match_found
+
+    mov rsi, spa
+    mov rdi, guess
+    mov rcx, lenSpa
+    cld
+    repe cmpsb
+    ; If rcx is zero (end of both strings reached), jump to equal
+    je match_found
+
+
+    jmp match_not_found
+
+; starting level 2
+level2:
+    ; Print string to console
+    mov rax, 1
+    mov edi, 1
+    mov esi, L2LINE1
+    mov rdx, len2
+    syscall
+
+    jmp display_prompt2
+
+; level 2 display prompt
 display_prompt2:
     mov rax, 1
     mov edi, 1
@@ -260,204 +331,7 @@ get_guess2:
 
     jmp check_guess_l2
 
-; level 3
-display_prompt3:
-    mov rax, 1
-    mov edi, 1
-    mov esi, prompt
-    mov rdx, lenPrompt
-    syscall
 
-    jmp get_guess3
-
-; receiving user input
-get_guess3:
-    mov rax, 0
-    mov rdi, 0
-    mov rsi, guess
-    mov rdx, 32
-    syscall
-
-    jmp check_guess_l3
-
-; level 4
-display_prompt4:
-    mov rax, 1
-    mov edi, 1
-    mov esi, prompt
-    mov rdx, lenPrompt
-    syscall
-
-    jmp get_guess4
-
-; receiving user input
-get_guess4:
-    mov rax, 0
-    mov rdi, 0
-    mov rsi, guess
-    mov rdx, 32
-    syscall
-
-    jmp check_guess_l4
-
-match_not_found:
-    ; Else, print "Strings are not equal" message
-    mov rax, 1
-    mov edi, 1
-    mov esi, wrongMsg
-    mov rdx, lenWrongMsg
-    syscall
-
-    jmp ask_new_word
-
-; print match found message
-match_found:
-    mov rax, 1
-    mov edi, 1
-    mov esi, correctMsg
-    mov rdx, lenCorrectMsg
-    syscall
-
-    jmp ask_new_word
-
-; ask if user still wants to find a new word
-ask_new_word:
-    ; display prompt for new word
-    mov rax, 1
-    mov edi, 1
-    mov esi, ask
-    mov rdx, lenAsk
-    syscall
-
-    ; read the input from the user
-    mov rax, 0
-    mov rdi, 0
-    mov rsi, respond
-    mov rdx, 2
-    syscall
-
-    mov rsi, yes
-    mov rdi, respond
-    mov rcx, lenYes
-    cld
-    repe cmpsb
-
-    ; If rcx is zero (end of both strings reached), jump to equal
-    je display_prompt1
-
-    jmp start_next_level
-
-start_next_level:
-    mov rax, 1
-    mov edi, 1
-    mov esi, ask
-    mov rdx, lenAsk
-    syscall
-
-    ; read the input from the user
-    mov rax, 0
-    mov rdi, 0
-    mov rsi, respond
-    mov rdx, 2
-    syscall
-
-    mov rsi, yes
-    mov rdi, respond
-    mov rcx, lenYes
-    cld
-    repe cmpsb
-
-    ; If rcx is zero (end of both strings reached), jump to equal
-    je begin1
-
-    jmp exit
-
-level1:
-    ; Print string to console
-    mov rax, 1
-    mov edi, 1
-    mov esi, l1FirstLine
-    mov rdx, len1
-    syscall
-
-    jmp display_prompt1
-
-level2:
-    ; Print string to console
-    mov rax, 1
-    mov edi, 1
-    mov esi, L2LINE1
-    mov rdx, len2
-    syscall
-
-    jmp display_prompt2
-
-level3:
-    ; Print string to console
-    mov rax, 1
-    mov edi, 1
-    mov esi, L3LINE1
-    mov rdx, len3
-    syscall
-
-    jmp display_prompt3
-
-; prints the grid puzzle
-level4:
-    ; Print string to console
-    mov rax, 1
-    mov edi, 1
-    mov esi, firstLine
-    mov rdx, len4
-    syscall
-
-    jmp display_prompt4
-
-check_guess_l1:
-    ; Compare strings s1 and s2
-    mov rsi, moon
-    mov rdi, guess
-    mov rcx, lenMoon
-    cld
-    repe cmpsb
-    ; If rcx is zero (end of both strings reached), jump to equal
-    je match_found
-
-; ; will be back
-;     mov rsi, man
-;     mov rdi, guess
-;     mov rcx, lenMan
-;     cld
-;     repe cmpsb
-;     ; If rcx is zero (end of both strings reached), jump to equal
-;     je match_found
-
-;     mov rsi, ooze
-;     mov rdi, guess
-;     mov rcx, lenOoze
-;     cld
-;     repe cmpsb
-;     ; If rcx is zero (end of both strings reached), jump to equal
-;     je match_found
-
-;     mov rsi, spa
-;     mov rdi, guess
-;     mov rcx, lenSpa
-;     cld
-;     repe cmpsb
-;     ; If rcx is zero (end of both strings reached), jump to equal
-;     je match_found
-
-;     mov rsi, seal
-;     mov rdi, guess
-;     mov rcx, lenSeal
-;     cld
-;     repe cmpsb
-;     ; If rcx is zero (end of both strings reached), jump to equal
-;     je match_found
-
-;     jmp match_not_found
-; ; 
 ; checking level 2 words
 check_guess_l2:
     ; Compare strings s1 and s2
@@ -544,6 +418,38 @@ check_guess_l2:
 
     jmp match_not_found
 
+; starting level 3
+level3:
+    ; Print string to console
+    mov rax, 1
+    mov edi, 1
+    mov esi, L3LINE1
+    mov rdx, len3
+    syscall
+
+    jmp display_prompt3
+
+; level 3
+display_prompt3:
+    mov rax, 1
+    mov edi, 1
+    mov esi, prompt
+    mov rdx, lenPrompt
+    syscall
+
+    jmp get_guess3
+
+; receiving user input
+get_guess3:
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, guess
+    mov rdx, 32
+    syscall
+
+    jmp check_guess_l3
+
+
 ; checking level 3 guess
 check_guess_l3:
     mov rsi, cane
@@ -629,7 +535,40 @@ check_guess_l3:
     
     jmp match_not_found
   
-  
+
+; starting level 4
+level4:
+    ; Print string to console
+    mov rax, 1
+    mov edi, 1
+    mov esi, firstLine
+    mov rdx, len4
+    syscall
+
+    jmp display_prompt4
+
+
+
+; level 4
+display_prompt4:
+    mov rax, 1
+    mov edi, 1
+    mov esi, prompt
+    mov rdx, lenPrompt
+    syscall
+
+    jmp get_guess4
+
+; receiving user input
+get_guess4:
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, guess
+    mov rdx, 32
+    syscall
+
+    jmp check_guess_l4
+
 ; checking level 3 guess
 check_guess_l4:
     mov rsi, university
@@ -715,6 +654,79 @@ check_guess_l4:
     
     jmp match_not_found
   
+
+match_not_found:
+    ; Else, print "Strings are not equal" message
+    mov rax, 1
+    mov edi, 1
+    mov esi, wrongMsg
+    mov rdx, lenWrongMsg
+    syscall
+
+    jmp display_prompt1
+
+; print match found message
+match_found:
+    mov rax, 1
+    mov edi, 1
+    mov esi, correctMsg
+    mov rdx, lenCorrectMsg
+    syscall
+
+    jmp ask_new_word
+
+; ask if user still wants to find a new word
+ask_new_word:
+    ; display prompt for new word
+    mov rax, 1
+    mov edi, 1
+    mov esi, ask
+    mov rdx, lenAsk
+    syscall
+
+    ; read the input from the user
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, respond
+    mov rdx, 2
+    syscall
+
+    mov rsi, yes
+    mov rdi, respond
+    mov rcx, lenYes
+    cld
+    repe cmpsb
+
+    ; If rcx is zero (end of both strings reached), jump to equal
+    je display_prompt1
+
+    jmp start_next_level
+
+start_next_level:
+    mov rax, 1
+    mov edi, 1
+    mov esi, ask
+    mov rdx, lenAsk
+    syscall
+
+    ; read the input from the user
+    mov rax, 0
+    mov rdi, 0
+    mov rsi, respond
+    mov rdx, 2
+    syscall
+
+    mov rsi, yes
+    mov rdi, respond
+    mov rcx, lenYes
+    cld
+    repe cmpsb
+
+    ; If rcx is zero (end of both strings reached), jump to equal
+    je begin2
+
+    jmp exit
+
 
 
 
